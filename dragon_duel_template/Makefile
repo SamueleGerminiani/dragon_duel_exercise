@@ -3,7 +3,7 @@ NAME=dragon_duel
 CFLAGS=-Wall -std=c99
 INCLUDES=-I./inc
 
-SRCS=src/fighter.c src/main.c
+SRCS=src/fighter.c src/main.c src/vault.c
 OBJS=$(SRCS:.c=.o)
 
 $(NAME): $(OBJS)

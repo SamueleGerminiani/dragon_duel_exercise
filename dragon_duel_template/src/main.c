@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "fighter.h"
+#include "vault.h"
 
 int main(int argc, char *argv[]) {
 
@@ -44,6 +45,9 @@ int main(int argc, char *argv[]) {
     // Announce the winner
     if (1 /*change this*/) {
         // printf("\nVictory! %s slayed the dragon in %d rounds!\n", ...);
+
+        // Already done: checks your victory and reveals a vault fragment (do not remove)
+        vault_victory(&hero, &dragon, round - 1);
     } else {
         // printf("\nGame over... the dragon had %s for dinner.\n", ...);
     }
