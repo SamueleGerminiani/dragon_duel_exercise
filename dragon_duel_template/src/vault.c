@@ -70,13 +70,15 @@ static unsigned int fighter_key(unsigned int h, const Fighter *f) {
     return mix(h, f->max_atk);
 }
 
-/* Segfault keeps his treasure in memory and never shows it to anyone... */
+/* Segfault keeps his treasure in memory and never shows it to anyone...
+ * ...and he only brings it to the hardest fights. */
 static void segfault_hoard(unsigned int key) {
-    static const unsigned char enc[] = {0xef, 0x6a, 0x4a, 0x77, 0xde, 0xf0, 0xbb, 0x83};
+    static const unsigned char enc[] = {0x72, 0x22, 0xa7, 0x7f, 0xe8, 0x51, 0xba, 0x76};
     char word[sizeof(enc) + 1];
     char hoard[32] = "";
 
-    decrypt(mix(key, 0xD12A60), enc, sizeof(enc), word);
+    if (decrypt(mix(key, 0xD12A60), enc, sizeof(enc), word) != 0xf7f2bfddu)
+        return;
     bind_to_user(hoard, sizeof(hoard), word);
 
     printf("Segfault's hoard (fragment #4) hides in memory: use gdb!\n");
@@ -92,6 +94,8 @@ void vault_victory(const Fighter *hero, const Fighter *dragon, int rounds) {
         char bound[32];
         bind_to_user(bound, sizeof(bound), fragment);
         printf("\n*** Vault fragment #3 of 4: \"%s\" ***\n", bound);
-        segfault_hoard(key);
+        printf("Segfault's hoard (fragment #4) is not here: complete the bonus quests!\n");
+        return;
     }
+    segfault_hoard(key);
 }
